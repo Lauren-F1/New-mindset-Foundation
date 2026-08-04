@@ -571,6 +571,12 @@ a:focus-visible, .btn:focus-visible {
   margin: 2rem 0 0;
 }
 
+/* ---- Home page book band: a slimmer cover column, roughly a third of the row ---- */
+.book--slim { grid-template-columns: 1fr 2fr; }
+@media (max-width: 820px) {
+  .book--slim { grid-template-columns: 1fr; }   /* stack, cover above text */
+}
+
 /* ---- Services "Learn more" expanders ----
    Progressive enhancement: with no JavaScript the full copy shows and the
    trigger stays hidden. Once the page is enhanced (.js on <html>), each block
