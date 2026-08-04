@@ -570,3 +570,39 @@ a:focus-visible, .btn:focus-visible {
   color: var(--stone);
   margin: 2rem 0 0;
 }
+
+/* ---- Services "Learn more" expanders ----
+   Progressive enhancement: with no JavaScript the full copy shows and the
+   trigger stays hidden. Once the page is enhanced (.js on <html>), each block
+   collapses to its first paragraph with a keyboard-accessible toggle. The
+   open and close animation uses the grid-rows 0fr to 1fr method, so it stays
+   smooth at any height with no bounce. */
+.expander-toggle {
+  display: none;                       /* shown only when JS enhances the page */
+  margin-top: 1.2rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: none;
+  border: 0;
+  border-bottom: 2px solid var(--citron);   /* the citron underline treatment */
+  padding: 0 0 3px;
+  cursor: pointer;
+}
+.js .expander-toggle { display: inline-block; }
+.expander-toggle:hover { border-bottom-color: var(--ink); }
+.expander-toggle:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
+
+.expander-panel__inner { overflow: hidden; }
+.js .expander-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.32s ease;   /* simple ease, no overshoot */
+}
+.js .expander-panel.is-open { grid-template-rows: 1fr; }
+@media (prefers-reduced-motion: reduce) {
+  .js .expander-panel { transition: none; }
+}

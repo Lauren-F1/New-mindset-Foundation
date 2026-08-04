@@ -19,6 +19,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
@@ -50,7 +51,12 @@
       <hr class="rule">
       <h2 style="max-width:26rem;">The Five Pillars of Leadership.</h2>
       <p style="margin-top:1.4rem;">Many organizations promote people because they’re technically capable, then expect them to develop leadership judgment, emotional intelligence, communication skills, and executive presence largely on their own. The Five Pillars of Leadership closes that gap by building five connected capacities: self-awareness and mindset; emotional intelligence, regulation, and empathy; communication and relationship repair; accountability and authentic leadership; and purpose, legacy, and impact.</p>
-      <p>The program gives leaders a shared language for understanding themselves, managing pressure, having difficult conversations, and taking ownership of their impact. It can be delivered through focused workshops, facilitated team sessions, or a longer development engagement shaped around the organization’s priorities.</p>
+      <button class="expander-toggle" type="button" aria-expanded="false" aria-controls="leadership-more">Learn more</button>
+      <div class="expander-panel" id="leadership-more">
+        <div class="expander-panel__inner">
+          <p style="margin:1.2rem 0 0;">The program gives leaders a shared language for understanding themselves, managing pressure, having difficult conversations, and taking ownership of their impact. It can be delivered through focused workshops, facilitated team sessions, or a longer development engagement shaped around the organization’s priorities.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -61,7 +67,12 @@
       <hr class="rule">
       <h2 style="max-width:28rem;">When something needs to change.</h2>
       <p style="margin-top:1.4rem;">Organizations often know something needs to change before they know exactly what the problem is. Roles may be unclear, communication may be breaking down, leaders may be operating in silos, or growth may have outpaced the company’s structure. We work with founders, executives, and people leaders to understand the human dynamics beneath those challenges and determine what needs greater clarity, accountability, alignment, or repair.</p>
-      <p>Engagements may include leadership-team facilitation, role clarification, communication strategy, transition support, culture development, or guidance through difficult conversations and structural change. The goal isn’t to impose a generic operating model. It’s to help the organization make more conscious decisions about how its people work, lead, and move forward together.</p>
+      <button class="expander-toggle" type="button" aria-expanded="false" aria-controls="advisory-more">Learn more</button>
+      <div class="expander-panel" id="advisory-more">
+        <div class="expander-panel__inner">
+          <p style="margin:1.2rem 0 0;">Engagements may include leadership-team facilitation, role clarification, communication strategy, transition support, culture development, or guidance through difficult conversations and structural change. The goal isn’t to impose a generic operating model. It’s to help the organization make more conscious decisions about how its people work, lead, and move forward together.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -72,7 +83,12 @@
       <hr class="rule">
       <h2 style="max-width:28rem;">Understanding yourself well enough to lead.</h2>
       <p style="margin-top:1.4rem;">Private coaching is for leaders, founders, and professionals who want to understand what’s shaping the way they lead, relate, decide, and respond under pressure. We look beneath the immediate challenge to identify the beliefs, emotional patterns, communication habits, and protective responses influencing what’s happening, then turn insight into practical change: clearer decisions, stronger boundaries, healthier relationships, steadier emotional regulation, and more consistent self-trust.</p>
-      <p>This isn’t about becoming a more polished version of who you think you should be. It’s about understanding yourself well enough to lead and live with intention. Engagements are private, highly individualized, and designed around each person.</p>
+      <button class="expander-toggle" type="button" aria-expanded="false" aria-controls="coaching-more">Learn more</button>
+      <div class="expander-panel" id="coaching-more">
+        <div class="expander-panel__inner">
+          <p style="margin:1.2rem 0 0;">This isn’t about becoming a more polished version of who you think you should be. It’s about understanding yourself well enough to lead and live with intention. Engagements are private, highly individualized, and designed around each person.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -112,6 +128,18 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    document.querySelectorAll('.expander-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var panel = document.getElementById(btn.getAttribute('aria-controls'));
+        var isOpen = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!isOpen));
+        if (panel) panel.classList.toggle('is-open', !isOpen);
+        btn.textContent = isOpen ? 'Learn more' : 'Show less';
+      });
+    });
+  </script>
 
 </body>
 </html>
