@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://newmindsetfoundation.com/sitemap.xml
