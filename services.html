@@ -86,7 +86,7 @@
       <button class="expander-toggle" type="button" aria-expanded="false" aria-controls="coaching-more">Learn more</button>
       <div class="expander-panel" id="coaching-more">
         <div class="expander-panel__inner">
-          <p style="margin:1.2rem 0 0;">This isn’t about becoming a more polished version of who you think you should be. It’s about understanding yourself well enough to lead and live with intention. Engagements are private, highly individualized, and designed around each person.</p>
+          <p style="margin:1.2rem 0 0;">This isn’t about becoming a more polished version of who you think you should be. It’s about starting right where you are, and understanding yourself well enough to lead and live with intention. Engagements are private, highly individualized, and designed around each person.</p>
         </div>
       </div>
     </div>
@@ -99,9 +99,32 @@
       <hr class="rule">
       <h2 style="max-width:22rem;">Start the conversation.</h2>
       <p style="margin-top:1.4rem;">To ask about coaching, leadership development, or advisory work, reach out and tell us where you are and what you’re trying to build.</p>
-      <div class="actions">
-        <a class="btn-list" href="mailto:info@newmindsetfoundation.com?subject=Coaching%20Inquiry">Get in touch</a>
-      </div>
+      <form class="inquiry-form" action="https://formspree.io/f/xnpaagjg" method="POST">
+        <input type="hidden" name="_subject" value="Coaching Inquiry (New Mindset Foundation)">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="form-row">
+          <div class="field">
+            <label for="f-name">Name</label>
+            <input id="f-name" type="text" name="name" required>
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" type="email" name="email" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-org">Organization</label>
+          <input id="f-org" type="text" name="organization">
+        </div>
+        <div class="field">
+          <label for="f-message">Message</label>
+          <textarea id="f-message" name="message" rows="5" required placeholder="Tell us where you are and what you’re trying to build."></textarea>
+        </div>
+        <div class="actions">
+          <button class="btn-list" type="submit">Send</button>
+        </div>
+        <p class="form-error" hidden>Something went wrong. You can email us directly at <a href="mailto:info@newmindsetfoundation.com">info@newmindsetfoundation.com</a>.</p>
+      </form>
     </div>
   </section>
 
@@ -109,10 +132,8 @@
   <footer class="site-footer">
     <div class="wrap footer-grid">
       <div>
-        <p class="eyebrow">New Mindset Foundation</p>
         <hr class="rule">
-        <h2 style="max-width:20rem;">Changing us changes everything.</h2>
-        <p style="margin-top:1rem; color:var(--stone);">More conscious leaders, stronger relationships, healthier organizations.</p>
+        <p style="font-family:var(--serif); font-weight:500; font-size:clamp(1.25rem, 2.2vw, 1.6rem); line-height:1.35; color:var(--paper); max-width:24rem; margin:0;">More conscious leaders, stronger relationships, healthier organizations.</p>
       </div>
       <div class="footer-contact">
         <p class="eyebrow">Contact</p>
@@ -139,6 +160,34 @@
         btn.textContent = isOpen ? 'Learn more' : 'Show less';
       });
     });
+
+    // Submit the inquiry in the background so the visitor stays on the page.
+    // If JavaScript is off, the form still posts normally to Formspree.
+    (function () {
+      var form = document.querySelector('.inquiry-form');
+      if (!form) return;
+      var errorLine = form.querySelector('.form-error');
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (errorLine) errorLine.hidden = true;
+        fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        }).then(function (response) {
+          if (response.ok) {
+            var thanks = document.createElement('p');
+            thanks.className = 'form-thanks';
+            thanks.textContent = 'Thank you. Your note is on its way, and you’ll hear back within two business days.';
+            form.replaceWith(thanks);
+          } else if (errorLine) {
+            errorLine.hidden = false;
+          }
+        }).catch(function () {
+          if (errorLine) errorLine.hidden = false;
+        });
+      });
+    })();
   </script>
 
 </body>

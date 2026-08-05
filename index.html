@@ -54,8 +54,8 @@
         <p class="eyebrow">New Mindset Foundation</p>
         <hr class="rule">
         <h1>Understanding changes us.</h1>
+        <p style="font-family:var(--serif); font-weight:500; font-size:clamp(1.9rem, 3.6vw, 2.8rem); letter-spacing:-0.3px; line-height:1.14; margin:0.5rem 0 0; max-width:26rem;">Changing us changes everything.</p>
         <p style="margin-top:1.4rem; color:#4b463f;">Executive coaching, leadership development, and organizational advisory for founders, executives, business owners, and leadership teams.</p>
-        <p style="font-size:0.98rem; color:#837a6e;">Developing more conscious leaders, stronger relationships, and healthier organizations.</p>
         <div class="actions">
           <a class="btn-list" href="#contact">Start a conversation</a>
         </div>
@@ -84,7 +84,7 @@
     <div class="wrap">
       <p class="eyebrow">What We Do</p>
       <hr class="rule">
-      <h2 style="max-width:20rem;">Three ways in.</h2>
+      <h2 style="max-width:20rem;">Where to begin.</h2>
       <div class="entries entries--porcelain">
 
         <div class="entry">
@@ -141,24 +141,6 @@
     </div>
   </section>
 
-  <!-- THE BOOK -->
-  <section class="section bg-blush">
-    <div class="wrap book book--slim">
-      <div class="book-cover" style="max-width:300px;">
-        <img src="images/making-lemonade-cover.png" alt="Making Lemonade book cover by Lauren Florek">
-      </div>
-      <div>
-        <p class="eyebrow">The Book</p>
-        <hr class="rule">
-        <h2 class="italic">Making Lemonade</h2>
-        <p style="margin-top:1rem;">Lauren’s first book: a brutally honest, unexpectedly funny guide to heartbreak, repair, and starting over. Publishing soon under her imprint, LemonPress.</p>
-        <div class="actions">
-          <a class="btn-list" href="https://laurenonlife.com/book.html">Read about the book</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- CONTACT -->
   <section class="section" id="contact">
     <div class="wrap" style="max-width:44rem;">
@@ -166,9 +148,32 @@
       <hr class="rule">
       <h2 style="max-width:22rem;">Start the conversation.</h2>
       <p style="margin-top:1.4rem;">To ask about coaching, leadership development, or advisory work, reach out and tell us where you are and what you’re trying to build.</p>
-      <div class="actions">
-        <a class="btn-list" href="mailto:info@newmindsetfoundation.com?subject=Coaching%20Inquiry">Get in touch</a>
-      </div>
+      <form class="inquiry-form" action="https://formspree.io/f/xnpaagjg" method="POST">
+        <input type="hidden" name="_subject" value="Coaching Inquiry (New Mindset Foundation)">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="form-row">
+          <div class="field">
+            <label for="f-name">Name</label>
+            <input id="f-name" type="text" name="name" required>
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" type="email" name="email" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-org">Organization</label>
+          <input id="f-org" type="text" name="organization">
+        </div>
+        <div class="field">
+          <label for="f-message">Message</label>
+          <textarea id="f-message" name="message" rows="5" required placeholder="Tell us where you are and what you’re trying to build."></textarea>
+        </div>
+        <div class="actions">
+          <button class="btn-list" type="submit">Send</button>
+        </div>
+        <p class="form-error" hidden>Something went wrong. You can email us directly at <a href="mailto:info@newmindsetfoundation.com">info@newmindsetfoundation.com</a>.</p>
+      </form>
     </div>
   </section>
 
@@ -176,10 +181,8 @@
   <footer class="site-footer">
     <div class="wrap footer-grid">
       <div>
-        <p class="eyebrow">New Mindset Foundation</p>
         <hr class="rule">
-        <h2 style="max-width:20rem;">Changing us changes everything.</h2>
-        <p style="margin-top:1rem; color:var(--stone);">More conscious leaders, stronger relationships, healthier organizations.</p>
+        <p style="font-family:var(--serif); font-weight:500; font-size:clamp(1.25rem, 2.2vw, 1.6rem); line-height:1.35; color:var(--paper); max-width:24rem; margin:0;">More conscious leaders, stronger relationships, healthier organizations.</p>
       </div>
       <div class="footer-contact">
         <p class="eyebrow">Contact</p>
@@ -195,6 +198,36 @@
       </div>
     </div>
   </footer>
+
+  <!-- Submit the inquiry in the background so the visitor stays on the page.
+       If JavaScript is off, the form still posts normally to Formspree. -->
+  <script>
+    (function () {
+      var form = document.querySelector('.inquiry-form');
+      if (!form) return;
+      var errorLine = form.querySelector('.form-error');
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (errorLine) errorLine.hidden = true;
+        fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        }).then(function (response) {
+          if (response.ok) {
+            var thanks = document.createElement('p');
+            thanks.className = 'form-thanks';
+            thanks.textContent = 'Thank you. Your note is on its way, and you’ll hear back within two business days.';
+            form.replaceWith(thanks);
+          } else if (errorLine) {
+            errorLine.hidden = false;
+          }
+        }).catch(function () {
+          if (errorLine) errorLine.hidden = false;
+        });
+      });
+    })();
+  </script>
 
 </body>
 </html>
